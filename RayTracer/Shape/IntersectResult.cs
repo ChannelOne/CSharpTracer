@@ -11,7 +11,7 @@ namespace RayTracer.Shape
     {
         public static IntersectResult NullResult = new IntersectResult();
 
-        public Intersectable Geometry { get; set; } = null;
+        public IGeometry Geometry { get; set; } = null;
         public float Distance { get; set; } = float.MaxValue;
         public Vector<float> Position { get; set; } = Vector<float>.Build.Dense(3);
         public Vector<float> Normal { get; set; } = Vector<float>.Build.Dense(3);

@@ -12,11 +12,25 @@ namespace Renderer
 {
     class Program
     {
+        private static byte[] ColorToBytes(Color[] colors)
+        {
+            var pixels = new byte[colors.Length * 4];
+            int i = 0;
+            foreach(Color color in colors)
+            {
+                pixels[i++] = color.R;
+                pixels[i++] = color.G;
+                pixels[i++] = color.B;
+                pixels[i++] = color.A;
+            }
+            return pixels;
+        }
+
         static void Main(string[] args)
         {
             int width = 500;
             int height = 500;
-            byte[] pixels = RayTracer.RayTracer.RenderDepth(width, height,
+            Color[] colors = RayTracer.RayTracer.RenderDepth(width, height,
                 new RayTracer.Shape.Sphere()
                 {
                     Center=Vector<float>.Build.DenseOfArray(new float[] { 0f, 10f, -10f }),
@@ -30,6 +44,7 @@ namespace Renderer
                     Fov=90,
                 },
                 20);
+            byte[] pixels = ColorToBytes(colors);
             BitmapPalette myPelette = BitmapPalettes.Gray256;
             BitmapSource image = BitmapSource.Create(
                     width,

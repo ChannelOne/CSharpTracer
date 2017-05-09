@@ -37,34 +37,62 @@ namespace Preview
             });
         }
 
+        private byte[] ColorToBytes(Color[] colors)
+        {
+            var pixels = new byte[colors.Length * 4];
+            int i = 0;
+            foreach(Color color in colors)
+            {
+                pixels[i++] = color.B;
+                pixels[i++] = color.G;
+                pixels[i++] = color.R;
+                pixels[i++] = color.A;
+            }
+            return pixels;
+        }
+
         private BitmapSource RenderImage()
         {
             int width = 500;
             int height = 500;
-            byte[] pixels = RayTracer.RayTracer.RenderDepth(width, height,
-                new RayTracer.Shape.Sphere()
-                {
-                    Center=Vector<float>.Build.DenseOfArray(new float[] { 0f, 10f, -10f }),
-                    Radius=10f,
-                },
+            var sphere1 = new RayTracer.Shape.Sphere()
+            {
+                Center = Vector<float>.Build.DenseOfArray(new float[] { -10f, 10f, -10f }),
+                Radius = 10f,
+                Material = new RayTracer.Materials.PhongMaterial(Colors.Red, Colors.White, 16),
+            };
+
+            var sphere2 = new RayTracer.Shape.Sphere()
+            {
+                Center = Vector<float>.Build.DenseOfArray(new float[] { 10, 10f, -10f }),
+                Radius = 10f,
+                Material = new RayTracer.Materials.PhongMaterial(Colors.Green, Colors.White, 16),
+            };
+
+            var union = new RayTracer.Shape.IntersectableUnion();
+            union.Add(sphere1);
+            union.Add(sphere2);
+            Color[] colors = RayTracer.RayTracer.RenderMaterial(width, height,
+                union,
                 new RayTracer.PerspectiveCamera()
                 {
-                    Eye=Vector<float>.Build.DenseOfArray(new float[] { 0f, 10f, 10f }),
+                    Eye=Vector<float>.Build.DenseOfArray(new float[] { 0f, 5f, 15f }),
                     Front=Vector<float>.Build.DenseOfArray(new float[] { 0f, 0f, -1f}),
                     Up=Vector<float>.Build.DenseOfArray(new float[] { 0f, 1f, 0f}),
                     Fov=90,
                 },
                 20);
-            BitmapPalette myPelette = BitmapPalettes.Gray256;
+            byte[] pixels = ColorToBytes(colors);
+            BitmapPalette myPelette = BitmapPalettes.Halftone256;
             BitmapSource image = BitmapSource.Create(
                     width,
                     height,
                     96,
                     96,
-                    PixelFormats.Indexed8,
+                    PixelFormats.Pbgra32,
                     myPelette,
                     pixels,
-                    width
+                    width * 4
                 );
 
             return image;

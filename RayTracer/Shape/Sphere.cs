@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics;
 
+using RayTracer.Materials;
+
 namespace RayTracer.Shape
 {
-    public sealed class Sphere : Intersectable
+    public sealed class Sphere : Intersectable, IGeometry
     {
+        public IMaterial Material { get; set; }
         public Vector<float> Center { get; set; }
 
         private float sqrRadius;

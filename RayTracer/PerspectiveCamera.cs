@@ -27,7 +27,6 @@ namespace RayTracer
         private Vector<float> front;
         private Vector<float> up;
         private Vector<float> right;
-        private Vector<float> realUp;
 
         public Vector<float> Eye { get; set; }
 
