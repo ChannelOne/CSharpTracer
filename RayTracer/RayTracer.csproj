@@ -55,6 +55,7 @@
     <Compile Include="Shape\Intersectable.cs" />
     <Compile Include="Shape\IntersectableUnion.cs" />
     <Compile Include="Shape\IntersectResult.cs" />
+    <Compile Include="Shape\Plane.cs" />
     <Compile Include="Shape\Sphere.cs" />
   </ItemGroup>
   <ItemGroup>

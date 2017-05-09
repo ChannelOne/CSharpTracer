@@ -69,9 +69,17 @@ namespace Preview
                 Material = new RayTracer.Materials.PhongMaterial(Colors.Green, Colors.White, 16),
             };
 
+            var plane = new RayTracer.Shape.Plane()
+            {
+                Normal = Vector<float>.Build.DenseOfArray(new[] { 0f, 1f, 0f }),
+                Distance = 0f,
+                Material = new RayTracer.Materials.CheckerMaterial(0.6f),
+            };
+
             var union = new RayTracer.Shape.IntersectableUnion();
             union.Add(sphere1);
             union.Add(sphere2);
+            union.Add(plane);
             Color[] colors = RayTracer.RayTracer.RenderMaterial(width, height,
                 union,
                 new RayTracer.PerspectiveCamera()

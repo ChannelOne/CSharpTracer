@@ -11,6 +11,11 @@ namespace RayTracer.Materials
     public sealed class CheckerMaterial : IMaterial
     {
 
+        public CheckerMaterial(float scale)
+        {
+            Scale = scale;
+        }
+
         public float Scale { get; set; }
 
         public Color Sample(Ray ray, Vector<float> position, Vector<float> normal)
