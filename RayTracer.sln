@@ -3,11 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "RayTracer", "RayTracer\RayTracer.shproj", "{24EF211D-176A-4D6E-8557-D68F33260B77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RayTracer", "RayTracer\RayTracer.csproj", "{64E01137-DF74-4C77-A198-162D476B0B06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Preview", "Preview\Preview.csproj", "{0AA5AF95-7B75-44C4-AF18-043D2AAF0DDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderer", "Renderer\Renderer.csproj", "{5BBB6FE7-5E3D-4F57-8874-B888C4CB83CA}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		RayTracer\RayTracer.projitems*{24ef211d-176a-4d6e-8557-d68f33260b77}*SharedItemsImports = 13
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64E01137-DF74-4C77-A198-162D476B0B06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64E01137-DF74-4C77-A198-162D476B0B06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64E01137-DF74-4C77-A198-162D476B0B06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64E01137-DF74-4C77-A198-162D476B0B06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA5AF95-7B75-44C4-AF18-043D2AAF0DDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA5AF95-7B75-44C4-AF18-043D2AAF0DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA5AF95-7B75-44C4-AF18-043D2AAF0DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA5AF95-7B75-44C4-AF18-043D2AAF0DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BBB6FE7-5E3D-4F57-8874-B888C4CB83CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BBB6FE7-5E3D-4F57-8874-B888C4CB83CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BBB6FE7-5E3D-4F57-8874-B888C4CB83CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BBB6FE7-5E3D-4F57-8874-B888C4CB83CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
