@@ -62,5 +62,51 @@ namespace RayTracer
             return colors;
         }
 
+        public static Color[] RenderReflection(int width, int height, Shape.Intersectable scene, PerspectiveCamera camera, int maxReflect)
+        {
+            Color[] colors = new Color[width * height];
+            int i = 0;
+            for (var y = 0; y < height; ++y)
+            {
+                float sy = 1 - y * 1f / height;
+                for (var x = 0; x < width; ++x)
+                {
+                    float sx = x * 1f / width;
+                    var ray = camera.GenerateRay(sx, sy);
+                    var color = RayTraceRecursive(scene, ray, maxReflect);
+                    colors[i++] = color;
+                }
+            }
+            return colors;
+        }
+
+        public static Color RayTraceRecursive(Shape.Intersectable scene, Ray ray, int maxReflect)
+        {
+            var result = scene.Intersect(ray);
+
+            if (result.Geometry != null)
+            {
+                float reflectiveness = result.Geometry.Material.Reflectiveness;
+                var color = result.Geometry.Material.Sample(ray, result.Position, result.Normal);
+                color = color * (1 - reflectiveness);
+
+                if (reflectiveness > 0 && maxReflect > 0)
+                {
+                    var r = result.Normal * (-2 * result.Normal.DotProduct(ray.Direction)) + ray.Direction;
+                    ray = new Ray()
+                    {
+                        Origin = result.Position,
+                        Direction = r,
+                    };
+                    var reflectedColor = RayTraceRecursive(scene, ray, maxReflect - 1);
+                    color += reflectedColor * reflectiveness;
+                }
+
+                return color;
+            }
+            else
+                return Colors.Black;
+        }
+
     }
 }

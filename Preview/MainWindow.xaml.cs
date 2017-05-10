@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,34 +54,34 @@ namespace Preview
 
         private BitmapSource RenderImage()
         {
-            int width = 500;
-            int height = 500;
+            int width = 1024;
+            int height = 1024;
             var sphere1 = new RayTracer.Shape.Sphere()
             {
                 Center = Vector<float>.Build.DenseOfArray(new float[] { -10f, 10f, -10f }),
                 Radius = 10f,
-                Material = new RayTracer.Materials.PhongMaterial(Colors.Red, Colors.White, 16),
+                Material = new RayTracer.Materials.PhongMaterial(Colors.Red, Colors.White, 16, 0.25f),
             };
 
             var sphere2 = new RayTracer.Shape.Sphere()
             {
                 Center = Vector<float>.Build.DenseOfArray(new float[] { 10, 10f, -10f }),
                 Radius = 10f,
-                Material = new RayTracer.Materials.PhongMaterial(Colors.Green, Colors.White, 16),
+                Material = new RayTracer.Materials.PhongMaterial(Colors.CornflowerBlue, Colors.White, 16, 0.25f),
             };
 
             var plane = new RayTracer.Shape.Plane()
             {
                 Normal = Vector<float>.Build.DenseOfArray(new[] { 0f, 1f, 0f }),
                 Distance = 0f,
-                Material = new RayTracer.Materials.CheckerMaterial(0.6f),
+                Material = new RayTracer.Materials.CheckerMaterial(0.6f, 0.5f),
             };
 
             var union = new RayTracer.Shape.IntersectableUnion();
             union.Add(sphere1);
             union.Add(sphere2);
             union.Add(plane);
-            Color[] colors = RayTracer.RayTracer.RenderMaterial(width, height,
+            Color[] colors = RayTracer.RayTracer.RenderReflection(width, height,
                 union,
                 new RayTracer.PerspectiveCamera()
                 {
@@ -89,7 +90,7 @@ namespace Preview
                     Up=Vector<float>.Build.DenseOfArray(new float[] { 0f, 1f, 0f}),
                     Fov=90,
                 },
-                20);
+                5);
             byte[] pixels = ColorToBytes(colors);
             BitmapPalette myPelette = BitmapPalettes.Halftone256;
             BitmapSource image = BitmapSource.Create(
@@ -102,6 +103,13 @@ namespace Preview
                     pixels,
                     width * 4
                 );
+
+            FileStream stream = new FileStream("new.png", FileMode.Create);
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Interlace = PngInterlaceOption.On;
+            encoder.Frames.Add(BitmapFrame.Create(image));
+            encoder.Save(stream);
+            stream.Close();
 
             return image;
         }

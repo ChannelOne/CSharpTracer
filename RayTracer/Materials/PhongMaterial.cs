@@ -52,12 +52,14 @@ namespace RayTracer.Materials
         }
 
         public float Shininess { get; set; }
+        public float Reflectiveness { get; set; }
 
-        public PhongMaterial(Color diffuse, Color specular, float shiness)
+        public PhongMaterial(Color diffuse, Color specular, float shiness, float reflectiveness = 0f)
         {
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shiness;
+            Reflectiveness = reflectiveness;
         }
 
         private Vector<float> Product(Vector<float> a , Vector<float> b)

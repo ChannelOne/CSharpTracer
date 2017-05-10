@@ -10,13 +10,14 @@ namespace RayTracer.Materials
 {
     public sealed class CheckerMaterial : IMaterial
     {
+        public float Scale { get; set; }
+        public float Reflectiveness { get; set; }
 
-        public CheckerMaterial(float scale)
+        public CheckerMaterial(float scale, float reflectiveness = 0f)
         {
             Scale = scale;
+            Reflectiveness = reflectiveness;
         }
-
-        public float Scale { get; set; }
 
         public Color Sample(Ray ray, Vector<float> position, Vector<float> normal)
         {

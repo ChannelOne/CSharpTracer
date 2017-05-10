@@ -10,6 +10,7 @@ namespace RayTracer.Materials
 {
     public interface IMaterial
     {
+        float Reflectiveness { get; }
         Color Sample(Ray ray, Vector<float> position, Vector<float> normal);
     }
 }
