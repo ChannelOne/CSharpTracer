@@ -30,9 +30,9 @@ namespace Preview
 
             Task.Run(() =>
             {
-                imageField.Dispatcher.Invoke(() =>
+                imageField.Dispatcher.Invoke(async () =>
                 {
-                    var image = RenderImage();
+                    var image = await RenderImage();
                     imageField.Source = image;
                 });
             });
@@ -52,7 +52,7 @@ namespace Preview
             return pixels;
         }
 
-        private BitmapSource RenderImage()
+        private async Task<BitmapSource> RenderImage()
         {
             int width = 1024;
             int height = 1024;
@@ -81,7 +81,7 @@ namespace Preview
             union.Add(sphere1);
             union.Add(sphere2);
             union.Add(plane);
-            Color[] colors = RayTracer.RayTracer.RenderReflection(width, height,
+            Color[] colors = await RayTracer.RayTracer.RenderReflection(width, height,
                 union,
                 new RayTracer.PerspectiveCamera()
                 {

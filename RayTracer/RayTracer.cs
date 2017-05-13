@@ -62,21 +62,40 @@ namespace RayTracer
             return colors;
         }
 
-        public static Color[] RenderReflection(int width, int height, Shape.Intersectable scene, PerspectiveCamera camera, int maxReflect)
+        public async static Task<Color[]> RenderReflection(int width, int height, Shape.Intersectable scene, PerspectiveCamera camera, int maxReflect)
         {
             Color[] colors = new Color[width * height];
             int i = 0;
-            for (var y = 0; y < height; ++y)
+
+            int half = height / 2;
+            await Task.Run(() =>
             {
-                float sy = 1 - y * 1f / height;
-                for (var x = 0; x < width; ++x)
+                for (var y = 0; y < half; ++y)
                 {
-                    float sx = x * 1f / width;
-                    var ray = camera.GenerateRay(sx, sy);
-                    var color = RayTraceRecursive(scene, ray, maxReflect);
-                    colors[i++] = color;
+                    float sy = 1 - y * 1f / height;
+                    for (var x = 0; x < width; ++x)
+                    {
+                        float sx = x * 1f / width;
+                        var ray = camera.GenerateRay(sx, sy);
+                        var color = RayTraceRecursive(scene, ray, maxReflect);
+                        colors[i++] = color;
+                    }
                 }
-            }
+            });
+            await Task.Run(() => {
+                int j = half * width;
+                for (var y = half + 1; y < height; ++y)
+                {
+                    float sy = 1 - y * 1f / height;
+                    for (var x = 0; x < width; ++x)
+                    {
+                        float sx = x * 1f / width;
+                        var ray = camera.GenerateRay(sx, sy);
+                        var color = RayTraceRecursive(scene, ray, maxReflect);
+                        colors[j++] = color;
+                    }
+                }
+            });
             return colors;
         }
 
